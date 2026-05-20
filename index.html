@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lee Robison</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ember: #E8621A;
+    --ember-dim: #B84D14;
+    --ember-faint: rgba(232, 98, 26, 0.10);
+    --ash: #0D0D0C;
+    --charcoal: #161614;
+    --iron: #222220;
+    --steel: #333330;
+    --smoke: #6B6B66;
+    --mist: #A8A8A2;
+    --light: #E8E8E2;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ash);
+    color: var(--light);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Noise grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* Ember glow top-left */
+  body::after {
+    content: '';
+    position: fixed;
+    top: -200px;
+    left: -200px;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(232,98,26,0.07) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ─── HEADER ─── */
+  header {
+    padding: 5rem 0 3rem;
+    border-bottom: 1px solid var(--iron);
+    position: relative;
+  }
+
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ember);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 1px;
+    background: var(--ember);
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 7vw, 4.5rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--light);
+    margin-bottom: 1.5rem;
+  }
+
+  h1 span {
+    color: var(--ember);
+  }
+
+  .tagline {
+    font-size: 1.05rem;
+    color: var(--mist);
+    max-width: 520px;
+    line-height: 1.8;
+  }
+
+  /* ─── STATUS BAR ─── */
+  .status-bar {
+    margin-top: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--smoke);
+    flex-wrap: wrap;
+  }
+
+  .status-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--ember);
+    animation: pulse 2.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* ─── SECTIONS ─── */
+  section {
+    padding: 3.5rem 0;
+    border-bottom: 1px solid var(--iron);
+  }
+
+  section:last-child { border-bottom: none; }
+
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ember-dim);
+    margin-bottom: 1.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--iron);
+  }
+
+  p {
+    color: var(--mist);
+    font-size: 1rem;
+    line-height: 1.85;
+    margin-bottom: 1rem;
+  }
+
+  p:last-child { margin-bottom: 0; }
+
+  /* ─── INTEREST TILES ─── */
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--iron);
+    border: 1px solid var(--iron);
+    margin-top: 0.5rem;
+  }
+
+  .tile {
+    background: var(--charcoal);
+    padding: 1.4rem 1.5rem;
+    transition: background 0.2s;
+  }
+
+  .tile:hover {
+    background: var(--iron);
+  }
+
+  .tile-icon {
+    font-size: 1.4rem;
+    margin-bottom: 0.7rem;
+    display: block;
+  }
+
+  .tile-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--light);
+    font-weight: 500;
+    margin-bottom: 0.3rem;
+  }
+
+  .tile-desc {
+    font-size: 0.82rem;
+    color: var(--smoke);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* ─── STACK LIST ─── */
+  .stack-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    padding: 0.35rem 0.75rem;
+    border: 1px solid var(--steel);
+    color: var(--mist);
+    letter-spacing: 0.04em;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .tag:hover {
+    border-color: var(--ember);
+    color: var(--ember);
+  }
+
+  /* ─── CONTACT ─── */
+  .contact-links {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+  }
+
+  .contact-link {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--mist);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-bottom: 2px;
+    border-bottom: 1px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .contact-link:hover {
+    color: var(--ember);
+    border-color: var(--ember);
+  }
+
+  .contact-link svg {
+    width: 15px;
+    height: 15px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex-shrink: 0;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    padding: 2.5rem 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--steel);
+    letter-spacing: 0.05em;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  @media (max-width: 540px) {
+    .tiles { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* ─── FADE-IN ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <header class="reveal">
+    <p class="eyebrow">leejrobison.com</p>
+    <h1>Lee <span>Robison.</span></h1>
+    <p class="tagline">
+      Hobbyist, tinkerer, and self-hosting enthusiast based in DuBois, PA.
+      I build things, break things, and fix them again — usually at 2am.
+    </p>
+    <div class="status-bar">
+      <span class="status-item"><span class="dot"></span> DuBois, Pennsylvania</span>
+      <span class="status-item">// homelab operator</span>
+      <span class="status-item">// perpetual student</span>
+    </div>
+  </header>
+
+  <section class="reveal">
+    <p class="section-label">About</p>
+    <p>
+      I'm a lifelong technology enthusiast with a deep interest in how things work under the hood.
+      My background isn't formal — no CS degree, no certifications — but I've spent years
+      learning by doing, and I'm convinced that's the best way to actually understand something.
+    </p>
+    <p>
+      Right now I'm slowly working through the fundamentals of programming — not just the syntax,
+      but the way of thinking that lets you look at a problem and know how to approach building
+      a solution. It's a long road, but the goal is clear: to eventually be able to write software
+      that's genuinely useful to someone.
+    </p>
+    <p>
+      When I'm not at a keyboard, I'm usually deep in some other rabbit hole — reconfiguring
+      a homeserver, automating something around the house, or gaming.
+    </p>
+  </section>
+
+  <section class="reveal">
+    <p class="section-label">Interests</p>
+    <div class="tiles">
+      <div class="tile">
+        <span class="tile-icon">🖥️</span>
+        <p class="tile-title">Self-Hosting</p>
+        <p class="tile-desc">Running my own infrastructure. If there's an open-source alternative, I want to try it.</p>
+      </div>
+      <div class="tile">
+        <span class="tile-icon">📡</span>
+        <p class="tile-title">Networking</p>
+        <p class="tile-desc">VLANs, reverse proxies, DNS. The unsexy stuff that makes everything else possible.</p>
+      </div>
+      <div class="tile">
+        <span class="tile-icon">🔧</span>
+        <p class="tile-title">Hardware</p>
+        <p class="tile-desc">Repurposing enterprise gear, drive upgrades, and the occasional ill-advised mod.</p>
+      </div>
+      <div class="tile">
+        <span class="tile-icon">🏠</span>
+        <p class="tile-title">Home Automation</p>
+        <p class="tile-desc">Connecting the physical and digital — lights, sensors, and routines that actually work.</p>
+      </div>
+      <div class="tile">
+        <span class="tile-icon">💻</span>
+        <p class="tile-title">Programming</p>
+        <p class="tile-desc">Working toward the fundamentals — slowly, deliberately. The goal: see a problem, build something that actually solves it.</p>
+      </div>
+      <div class="tile">
+        <span class="tile-icon">🎮</span>
+        <p class="tile-title">Gaming</p>
+        <p class="tile-desc">PC gaming and the occasional server-side adventure with friends.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal">
+    <p class="section-label">Tools I Work With</p>
+    <div class="stack-list">
+      <span class="tag">Unraid</span>
+      <span class="tag">Docker</span>
+      <span class="tag">Linux</span>
+      <span class="tag">Nginx</span>
+      <span class="tag">Cloudflare</span>
+      <span class="tag">Bash</span>
+      <span class="tag">Nextcloud</span>
+      <span class="tag">Jellyfin / Plex</span>
+      <span class="tag">Immich</span>
+      <span class="tag">Vaultwarden</span>
+    </div>
+  </section>
+
+  <section class="reveal">
+    <p class="section-label">Get In Touch</p>
+    <p>I'm always happy to talk tech. Feel free to reach out.</p>
+    <div class="contact-links">
+      <a href="mailto:lee@leejrobison.com" class="contact-link">
+        <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+        lee@leejrobison.com
+      </a>
+      <a href="https://github.com/ljrobison" class="contact-link" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        GitHub
+      </a>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <span>© 2025 Lee Robison</span>
+      <span>DuBois, PA // Self-hosted with ❤️</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
