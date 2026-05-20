@@ -24,6 +24,16 @@
 
   html { scroll-behavior: smooth; }
 
+  body, section, header, footer, p, h1, .tile, .tag, .eyebrow, .section-label {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  a, input, textarea {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+
   body {
     background: var(--ash);
     color: var(--light);
