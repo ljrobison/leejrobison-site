@@ -15,6 +15,10 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+  html {
+    background-color: #0D0D0C;
+  }
+
   :root {
     --ember: #E8621A;
     --ember-dim: #B84D14;
@@ -28,7 +32,32 @@
     --light: #E8E8E2;
   }
 
-  html { scroll-behavior: smooth; 
+  h1, p, .eyebrow, .section-label, .tile-title, .tile-desc, .tagline, .status-bar, .tag, .footer-inner {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  html { scroll-behavior: smooth; }
+
+
+  body {
+    background: var(--ash);
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    color: var(--light);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    position: relative;
+  }
+
+
+
   .container {
     max-width: 760px;
     margin: 0 auto;
@@ -284,11 +313,8 @@
 
   .reveal.visible {
     opacity: 1;
+    will-change: auto;
   }
-
-  p, h1, .tile-title, .tile-desc, .tag, .footer-inner {
-    -webkit-touch-callout: none; /* Disables the instant touch callout magnifying glass */
-}   
 </style>
 </head>
 <body>
